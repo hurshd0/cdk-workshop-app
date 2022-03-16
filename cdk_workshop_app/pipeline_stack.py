@@ -24,7 +24,10 @@ class WorkshopPipelineStack(Stack):
                     "npm install -g aws-cdk",
                     "python -m pip install -r requirements.txt",
                     "cdk synth",
-                    "pytest",
                 ],
             ),
         )
+
+        testing = WorkshopPipelineStage(self, "Testing")
+        testing_stage = pipeline.add_stage(testing)
+        testing_stage.add_post(ShellStep("validate", commands=["pytest"]))
