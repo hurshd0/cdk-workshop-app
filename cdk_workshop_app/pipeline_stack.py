@@ -2,6 +2,7 @@ from constructs import Construct
 from aws_cdk import Stack
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 import aws_cdk as cdk
+from .pipeline_stage import WorkshopPipelineStage
 
 
 class WorkshopPipelineStack(Stack):
@@ -23,6 +24,7 @@ class WorkshopPipelineStack(Stack):
                     "npm install -g aws-cdk",
                     "python -m pip install -r requirements.txt",
                     "cdk synth",
+                    "pytest",
                 ],
             ),
         )

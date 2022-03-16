@@ -1,7 +1,6 @@
 from aws_cdk import (
-    # Duration,
     Stack,
-    # aws_sqs as sqs,
+    CfnOutput,
     aws_lambda as _lambda,
     aws_apigateway as apigw,
 )
@@ -28,7 +27,21 @@ class CdkWorkshopAppStack(Stack):
         hitcounter = HitCounter(self, "HelloHitCounter", downstream=hello)
 
         # 3. API Endpoint to invoke the lambda function
-        apigw.LambdaRestApi(self, "HitCountEndpoint", handler=hitcounter.handler)
+        gateway = apigw.LambdaRestApi(
+            self, "HitCountEndpoint", handler=hitcounter.handler
+        )
 
         # 4. View the table
-        TableViewer(self, "ViewHitCounter", table=hitcounter.table)
+        tv = TableViewer(self, "ViewHitCounter", table=hitcounter.table)
+
+        # 5. Endpoints
+        self._hc_endpoint = CfnOutput(self, "GatewayUrl", value=gateway.url)
+        self._hc_viewer_url = CfnOutput(self, "TableViewerUrl", value=tv.endpoint)
+
+    @property
+    def hc_endpoint(self):
+        return self._hc_endpoint
+
+    @property
+    def hc_viewer_url(self):
+        return self._hc_viewer_url
