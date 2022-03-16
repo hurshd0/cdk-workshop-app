@@ -28,11 +28,11 @@ class WorkshopPipelineStack(Stack):
             ),
         )
 
-        testing = WorkshopPipelineStage(self, "Testing")
-        testing_stage = pipeline.add_stage(testing)
-        testing_stage.add_post(
-            ShellStep(
-                "validate",
-                commands=["python -m pip install -r requirements-dev.txt", "pytest"],
-            )
-        )
+        # testing = WorkshopPipelineStage(self, "Testing")
+        # testing_stage = pipeline.add_stage(testing)
+        # testing_stage.add_post(
+        #     ShellStep(
+        #         "validate",
+        #         commands=["python -m pip install -r requirements-dev.txt", "pytest"],
+        #     )
+        # )
