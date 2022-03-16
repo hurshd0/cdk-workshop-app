@@ -20,12 +20,9 @@ class WorkshopPipelineStack(Stack):
                     "main",
                     authentication=cdk.SecretValue.secrets_manager("GithubToken"),
                 ),
-                commands=[
-                    "npm install -g aws-cdk",
-                    "python -m pip install -r requirements.txt",
-                    "cdk synth",
-                ],
+                commands=["scripts/build.sh"],
             ),
+            self_mutation=False,
         )
 
         # testing = WorkshopPipelineStage(self, "Testing")
