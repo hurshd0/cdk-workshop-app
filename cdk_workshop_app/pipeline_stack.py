@@ -36,7 +36,7 @@ class WorkshopPipelineStack(Stack):
             )
         )
         testing_stage.add_post(
-            pipeline.ShellStep(
+            ShellStep(
                 "TestAPIGatewayEndpoint",
                 env_from_cfn_outputs={"ENDPOINT_URL": testing.hc_endpoint},
                 commands=[
@@ -47,7 +47,7 @@ class WorkshopPipelineStack(Stack):
             )
         )
         testing_stage.add_post(
-            pipeline.ShellStep(
+            ShellStep(
                 "TestViewerEndpoint",
                 env_from_cfn_outputs={"ENDPOINT_URL": testing.hc_viewer_url},
                 commands=["curl -Ssf $ENDPOINT_URL"],
