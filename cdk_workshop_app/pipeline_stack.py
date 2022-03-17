@@ -32,6 +32,6 @@ class WorkshopPipelineStack(Stack):
             ShellStep(
                 "Validate",
                 input=source,
-                commands=["pip install -r requirements-dev.txt", "pytest"],
+                commands=["pip install -r requirements.txt", "pytest"],
             )
         )
