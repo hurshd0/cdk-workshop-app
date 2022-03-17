@@ -9,17 +9,19 @@ class WorkshopPipelineStack(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
+        source = CodePipelineSource.git_hub(
+            "hurshd0/cdk-workshop-app",
+            "main",
+            authentication=cdk.SecretValue.secrets_manager("GithubToken"),
+        )
+
         pipeline = CodePipeline(
             self,
             "Pipeline",
             pipeline_name="CDKWorkshopPipeline",
             synth=ShellStep(
                 "Synth",
-                input=CodePipelineSource.git_hub(
-                    "hurshd0/cdk-workshop-app",
-                    "main",
-                    authentication=cdk.SecretValue.secrets_manager("GithubToken"),
-                ),
+                input=source,
                 commands=["scripts/build.sh"],
             ),
         )
@@ -29,6 +31,7 @@ class WorkshopPipelineStack(Stack):
         testing_stage.add_post(
             ShellStep(
                 "Validate",
-                commands=["python -m pip install -r requirements-dev.txt", "pytest"],
+                input=source,
+                commands=["pip install -r requirements-dev.txt", "pytest"],
             )
         )
