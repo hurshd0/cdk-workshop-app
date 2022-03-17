@@ -1,16 +1,22 @@
 
-# Welcome to your CDK Python project!
+# CDK Python Project Demo App
 
-This is a blank project for Python development with CDK.
+This app logs path `/hello`, `/hi` to dynamodb and displays it as HTML website. 
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+To try the demo visit [CDKWorkshop](https://cdkworkshop.com/)
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+## Prerequisites
+
+1. Setup Admin user `cdk-workshop` with AdminAccess
+2. Configure aws credentials
+3. Check Node.js version is >= 10.13.0, if not update it 
+4. Install CDK toolkit `npm install -g aws-cdk` & Check CDK version `cdk --version` is >= 2.0.0
+5. Check Python is >= 3.6
+## Setup 
+
+1. Git clone the repository
+
+2. Activate the virtualenv
 
 To manually create a virtualenv on MacOS and Linux:
 
@@ -37,6 +43,7 @@ Once the virtualenv is activated, you can install the required dependencies.
 $ pip install -r requirements.txt
 ```
 
+3. Sythesize the CloudFormation template
 At this point you can now synthesize the CloudFormation template for this code.
 
 ```
@@ -46,6 +53,12 @@ $ cdk synth
 To add additional dependencies, for example other CDK libraries, just add
 them to your `setup.py` file and rerun the `pip install -r requirements.txt`
 command.
+
+4. Deploy the stack
+
+```
+$ cdk deploy
+```
 
 ## Useful commands
 
