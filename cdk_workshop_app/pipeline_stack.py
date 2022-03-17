@@ -28,7 +28,7 @@ class WorkshopPipelineStack(Stack):
         testing_stage = pipeline.add_stage(testing)
         testing_stage.add_post(
             ShellStep(
-                "validate",
+                "Validate",
                 commands=["python -m pip install -r requirements-dev.txt", "pytest"],
             )
         )
