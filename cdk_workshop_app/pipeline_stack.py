@@ -35,3 +35,21 @@ class WorkshopPipelineStack(Stack):
                 commands=["pip install -r requirements.txt", "pytest"],
             )
         )
+        testing_stage.add_post(
+            pipeline.ShellStep(
+                "TestAPIGatewayEndpoint",
+                env_from_cfn_outputs={"ENDPOINT_URL": testing.hc_endpoint},
+                commands=[
+                    "curl -Ssf $ENDPOINT_URL",
+                    "curl -Ssf $ENDPOINT_URL/hello",
+                    "curl -Ssf $ENDPOINT_URL/test",
+                ],
+            )
+        )
+        testing_stage.add_post(
+            pipeline.ShellStep(
+                "TestViewerEndpoint",
+                env_from_cfn_outputs={"ENDPOINT_URL": testing.hc_viewer_url},
+                commands=["curl -Ssf $ENDPOINT_URL"],
+            )
+        )
